@@ -1,6 +1,7 @@
 const express = require("express");
+const applicationConfig = require("./configurations/app-config");
 const app = express();
-const port = 3000;
+const port = applicationConfig.port;
 const flightsRouter = require("./routes/flights");
 app.use(express.json());
 app.use(
@@ -24,5 +25,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`Server started. Listening at http://localhost:${port}`);
 });
