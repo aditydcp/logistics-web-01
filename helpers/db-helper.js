@@ -18,7 +18,7 @@ function valueOrNull(value, type = "string") {
     return `NULL`
 }
 
-function hashEncrypt(string) {
+async function hashEncrypt(string) {
     return bcrypt.hash(string, 10)
 }
 

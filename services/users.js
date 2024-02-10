@@ -26,11 +26,11 @@ async function getOne(id) {
 }
 
 async function create(user) {
-    let password = helper.hashEncrypt(user.password)
+    let password = await helper.hashEncrypt(user.password)
     const result = await db.query(
         `INSERT INTO users 
          (name, email, password) VALUES
-         ('${user.name}', ${user.email}, ${password})`
+         ('${user.name}', '${user.email}', '${password}')`
     );
   
     let message = 'Error in creating user';
@@ -43,7 +43,7 @@ async function create(user) {
 }
 
 async function update(id, user) {
-    let password = helper.hashEncrypt(user.password)
+    let password = await helper.hashEncrypt(user.password)
     const result = await db.query(
         `UPDATE users 
         SET name="${user.name}", email="${user.email}",
