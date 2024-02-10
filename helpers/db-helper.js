@@ -18,6 +18,12 @@ function valueOrNull(value, type = "string") {
     return `NULL`
 }
 
+function deconstructIfSingle(rowData) {
+    if (rowData.length == 1)
+        return rowData[0]
+    else return rowData
+}
+
 async function hashEncrypt(string) {
     return bcrypt.hash(string, 10)
 }
@@ -26,5 +32,6 @@ module.exports = {
     getOffset,
     emptyOrRows,
     valueOrNull,
+    deconstructIfSingle,
     hashEncrypt
 }

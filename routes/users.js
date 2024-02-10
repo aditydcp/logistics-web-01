@@ -22,10 +22,10 @@ router.post('/', async function(req, res, next) {
     }
 });
 
-/* GET user */
+/* GET user by id */
 router.get('/:id', async function(req, res, next) {
     try {
-        res.json(await usersService.getOne(req.params.id));
+        res.json(await usersService.getOneById(req.params.id));
     } catch (err) {
         console.error(`Error while getting user`, err.message);
         next(err);

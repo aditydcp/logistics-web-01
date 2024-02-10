@@ -16,11 +16,22 @@ async function getAll(page = 1) {
     }
 }
 
-async function getOne(id) {
+async function getOneById(id) {
     const result = await db.query(
         `SELECT * FROM users WHERE id=${id}`
     );
-    const data = helper.emptyOrRows(result);
+    let row = helper.emptyOrRows(result);
+    let data = helper.deconstructIfSingle(row);
+
+    return {data};
+}
+
+async function getOneByEmail(email) {
+    const result = await db.query(
+        `SELECT * FROM users WHERE email='${email}'`
+    );
+    let row = helper.emptyOrRows(result);
+    let data = helper.deconstructIfSingle(row);
 
     return {data};
 }
@@ -76,7 +87,8 @@ async function remove(id) {
 
 module.exports = {
     getAll,
-    getOne,
+    getOneById,
+    getOneByEmail,
     create,
     update,
     remove

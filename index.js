@@ -2,6 +2,7 @@ const express = require("express");
 const applicationConfig = require("./configurations/app-config");
 const app = express();
 const port = applicationConfig.port;
+const activeUserRouter = require("./routes/active-user")
 const flightsRouter = require("./routes/flights");
 const bookingsRouter = require("./routes/bookings");
 const airlinesRouter = require("./routes/airlines");
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 // Configure routes
+app.use("/user", activeUserRouter)
 app.use("/flights", flightsRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/airlines", airlinesRouter);
