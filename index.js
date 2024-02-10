@@ -9,6 +9,7 @@ const airportsRouter = require("./routes/airports");
 const exportersRouter = require("./routes/exporters");
 const importersRouter = require("./routes/importers");
 const usersRouter = require("./routes/users");
+const MainErrorHandler = require("./error-handlers/main-error-handler");
 app.use(express.json());
 app.use(
     express.urlencoded({
@@ -29,13 +30,15 @@ app.use("/exporters", exportersRouter);
 app.use("/importers", importersRouter);
 app.use("/users", usersRouter);
 
-/* Error handler middleware */
-app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    console.error(err.message, err.stack);
-    res.status(statusCode).json({ message: err.message });
-    return;
-});
+// Configure error handler
+app.use(MainErrorHandler)
+// /* Error handler middleware */
+// app.use((err, req, res, next) => {
+//     const statusCode = err.statusCode || 500;
+//     console.error(err.message, err.stack);
+//     res.status(statusCode).json({ message: err.message });
+//     return;
+// });
 
 app.listen(port, () => {
     console.log(`Server started. Listening at http://localhost:${port}`);
