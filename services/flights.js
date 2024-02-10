@@ -1,5 +1,5 @@
 const db = require('./db');
-const helper = require('../helper');
+const helper = require('../helpers/db-helper');
 const config = require('../configurations/db-config');
 
 async function getAll(page = 1) {
