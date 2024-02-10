@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const flights = require('../services/flights');
+const flightsService = require('../services/flights');
 
 /* GET all flights */
 router.get('/', async function(req, res, next) {
     try {
-        res.json(await flights.getAll(req.query.page));
+        res.json(await flightsService.getAll(req.query.page));
     } catch (err) {
         console.error(`Error while getting flights`, err.message);
         next(err);
@@ -15,7 +15,7 @@ router.get('/', async function(req, res, next) {
 /* POST flight */
 router.post('/', async function(req, res, next) {
     try {
-        res.json(await flights.create(req.body));
+        res.json(await flightsService.create(req.body));
     } catch (err) {
         console.error(`Error while creating flight`, err.message);
         next(err);
@@ -25,7 +25,7 @@ router.post('/', async function(req, res, next) {
 /* GET flight */
 router.get('/:id', async function(req, res, next) {
     try {
-        res.json(await flights.getOne(req.params.id));
+        res.json(await flightsService.getOne(req.params.id));
     } catch (err) {
         console.error(`Error while getting flight`, err.message);
         next(err);
@@ -35,7 +35,7 @@ router.get('/:id', async function(req, res, next) {
 /* PUT flight */
 router.put('/:id', async function(req, res, next) {
     try {
-        res.json(await flights.update(req.params.id, req.body));
+        res.json(await flightsService.update(req.params.id, req.body));
     } catch (err) {
         console.error(`Error while updating flight`, err.message);
         next(err);
@@ -45,7 +45,7 @@ router.put('/:id', async function(req, res, next) {
 /* DELETE flight */
 router.delete('/:id', async function(req, res, next) {
     try {
-        res.json(await flights.remove(req.params.id));
+        res.json(await flightsService.remove(req.params.id));
     } catch (err) {
         console.error(`Error while deleting flight`, err.message);
         next(err);

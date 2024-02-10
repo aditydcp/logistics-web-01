@@ -26,7 +26,7 @@ async function getOne(id) {
 }
 
 async function create(airline) {
-    let logo_url = airline.logo_url ? `'${airline.logo_url}'` : `NULL`
+    let logo_url = helper.valueOrNull(airline.logo_url)
     const result = await db.query(
         `INSERT INTO airlines (name, logo_url) VALUES
          ('${airline.name}', ${logo_url})`

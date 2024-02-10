@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const airports = require('../services/airports');
+const airportsService = require('../services/airports');
 
 /* GET all airports */
 router.get('/', async function(req, res, next) {
     try {
-        res.json(await airports.getAll(req.query.page));
+        res.json(await airportsService.getAll(req.query.page));
     } catch (err) {
         console.error(`Error while getting airports`, err.message);
         next(err);
@@ -15,7 +15,7 @@ router.get('/', async function(req, res, next) {
 /* POST airport */
 router.post('/', async function(req, res, next) {
     try {
-        res.json(await airports.create(req.body));
+        res.json(await airportsService.create(req.body));
     } catch (err) {
         console.error(`Error while creating airport`, err.message);
         next(err);
@@ -25,7 +25,7 @@ router.post('/', async function(req, res, next) {
 /* GET airport */
 router.get('/:id', async function(req, res, next) {
     try {
-        res.json(await airports.getOne(req.params.id));
+        res.json(await airportsService.getOne(req.params.id));
     } catch (err) {
         console.error(`Error while getting airport`, err.message);
         next(err);
@@ -35,7 +35,7 @@ router.get('/:id', async function(req, res, next) {
 /* PUT airport */
 router.put('/:id', async function(req, res, next) {
     try {
-        res.json(await airports.update(req.params.id, req.body));
+        res.json(await airportsService.update(req.params.id, req.body));
     } catch (err) {
         console.error(`Error while updating airport`, err.message);
         next(err);
@@ -45,7 +45,7 @@ router.put('/:id', async function(req, res, next) {
 /* DELETE airport */
 router.delete('/:id', async function(req, res, next) {
     try {
-        res.json(await airports.remove(req.params.id));
+        res.json(await airportsService.remove(req.params.id));
     } catch (err) {
         console.error(`Error while deleting airport`, err.message);
         next(err);
