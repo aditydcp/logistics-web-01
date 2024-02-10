@@ -41,7 +41,7 @@ async function create(airline) {
     return {message};
 }
 
-async function update(id, airline){
+async function update(id, airline) {
     const result = await db.query(
         `UPDATE airlines 
         SET name="${airline.name}", logo_url="${airline.logo_url}"
@@ -57,7 +57,7 @@ async function update(id, airline){
     return {message};
 }
 
-async function remove(id){
+async function remove(id) {
     const result = await db.query(
       `DELETE FROM airlines WHERE id=${id}`
     );
