@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const flightsService = require('../services/flights');
+const authMiddleware = require('../middlewares/auth')
 
 /* GET all flights */
-router.get('/', async function(req, res, next) {
+router.get('/', authMiddleware, async function(req, res, next) {
     try {
         res.json(await flightsService.getAll(req.query.page));
     } catch (err) {
