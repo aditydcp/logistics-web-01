@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const airportsService = require('../services/airports');
+const flightsService = require('../routes/flights')
 
 /* GET all airports */
 router.get('/', async function(req, res, next) {
@@ -51,5 +52,15 @@ router.delete('/:id', async function(req, res, next) {
         next(err);
     }
 });
+
+/* GET all flights via airport */
+router.get('/:id/flights', async function(req, res, next) {
+    try {
+        res.json(await flightsService.getAllByAirport(req.params.id, req.query.page))
+    } catch (err) {
+        console.error(`Error while getting flights via airport`, err.message);
+        next(err);
+    }
+})
 
 module.exports = router;

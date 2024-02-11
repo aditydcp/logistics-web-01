@@ -16,6 +16,39 @@ async function getAll(page = 1) {
     }
 }
 
+async function getAllByAirport(airportId, page = 1) {
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await db.query(
+        `SELECT * FROM flights
+         WHERE departure_airport_id = ${airportId}
+         OR arrival_airport_id = ${airportId}
+         LIMIT ${offset},${config.listPerPage}`
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+
+    return {
+        data,
+        meta
+    }
+}
+
+async function getAllByAirline(airlineId, page = 1) {
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await db.query(
+        `SELECT * FROM flights
+         WHERE airline_id = ${airlineId}
+         LIMIT ${offset},${config.listPerPage}`
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+
+    return {
+        data,
+        meta
+    }
+}
+
 async function getOne(id) {
     const result = await db.query(
         `SELECT * FROM flights WHERE id=${id}`
@@ -28,9 +61,9 @@ async function getOne(id) {
 async function create(flight) {
     const result = await db.query(
         `INSERT INTO flights 
-        (airlines_id, plane_model, baggage_size, departure_airport_id, departure_datetime, arrival_airport_id, arrival_datetime) 
+        (airline_id, plane_model, baggage_size, departure_airport_id, departure_datetime, arrival_airport_id, arrival_datetime) 
         VALUES 
-        (${flight.airlines_id}, '${flight.plane_model}', ${flight.baggage_size},
+        (${flight.airline_id}, '${flight.plane_model}', ${flight.baggage_size},
          ${flight.departure_airport_id}, '${flight.departure_datetime}',
          ${flight.arrival_airport_id}, '${flight.arrival_datetime}')`
     );
@@ -47,7 +80,7 @@ async function create(flight) {
 async function update(id, flight) {
     const result = await db.query(
         `UPDATE flights 
-        SET airlines_id="${flight.airlines_id}", plane_model=${flight.plane_model}, baggage_size=${flight.baggage_size}, 
+        SET airline_id="${flight.airline_id}", plane_model=${flight.plane_model}, baggage_size=${flight.baggage_size}, 
         departure_airport_id=${flight.departure_airport_id}, departure_datetime=${flight.departure_datetime}, 
         arrival_airport_id=${flight.arrival_airport_id}, arrival_datetime=${flight.arrival_datetime}
         WHERE id=${id}`
@@ -78,6 +111,8 @@ async function remove(id) {
 
 module.exports = {
     getAll,
+    getAllByAirport,
+    getAllByAirline,
     getOne,
     create,
     update,
