@@ -52,4 +52,14 @@ router.delete('/:id', async function(req, res, next) {
     }
 });
 
+/* GET all bookings via importer */
+router.get('/:id/bookings', async function(req, res, next) {
+    try {
+        res.json(await bookingsService.getAllByImporter(req.params.id, req.query.page))
+    } catch (err) {
+        console.error(`Error while getting bookings via importer`, err.message);
+        next(err);
+    }
+})
+
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const exportersService = require('../services/exporters');
+const bookingsService = require('../services/bookings')
 
 /* GET all exporters */
 router.get('/', async function(req, res, next) {
@@ -51,5 +52,15 @@ router.delete('/:id', async function(req, res, next) {
         next(err);
     }
 });
+
+/* GET all bookings via exporter */
+router.get('/:id/bookings', async function(req, res, next) {
+    try {
+        res.json(await bookingsService.getAllByExporter(req.params.id, req.query.page))
+    } catch (err) {
+        console.error(`Error while getting bookings via exporter`, err.message);
+        next(err);
+    }
+})
 
 module.exports = router;

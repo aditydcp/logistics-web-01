@@ -16,6 +16,54 @@ async function getAll(page = 1) {
     }
 }
 
+async function getAllByUser(userId, page = 1) {
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await db.query(
+        `SELECT * FROM bookings
+         WHERE user_id = ${userId}
+         LIMIT ${offset},${config.listPerPage}`
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+
+    return {
+        data,
+        meta
+    }
+}
+
+async function getAllByExporter(exporterId, page = 1) {
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await db.query(
+        `SELECT * FROM bookings
+         WHERE exporter_id = ${exporterId}
+         LIMIT ${offset},${config.listPerPage}`
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+
+    return {
+        data,
+        meta
+    }
+}
+
+async function getAllByImporter(importerId, page = 1) {
+    const offset = helper.getOffset(page, config.listPerPage);
+    const rows = await db.query(
+        `SELECT * FROM bookings
+         WHERE importer_id = ${importerId}
+         LIMIT ${offset},${config.listPerPage}`
+    );
+    const data = helper.emptyOrRows(rows);
+    const meta = {page};
+
+    return {
+        data,
+        meta
+    }
+}
+
 async function getOne(id) {
     const result = await db.query(
         `SELECT * FROM bookings WHERE id=${id}`
@@ -104,6 +152,9 @@ async function remove(id) {
 
 module.exports = {
     getAll,
+    getAllByUser,
+    getAllByExporter,
+    getAllByImporter,
     getOne,
     create,
     update,
